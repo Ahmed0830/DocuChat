@@ -1,4 +1,4 @@
-# pdf-rag-chatbot
+# DocuChat
 
 A chatbot that lets you have multi-turn conversations with your PDF documents.  
 Upload PDFs through a web UI, ask questions, and get answers grounded in your documents.  
@@ -42,8 +42,8 @@ README.md
 **1. Clone and install Python dependencies**
 
 ```bash
-git clone https://github.com/<your-username>/pdf-rag-chatbot.git
-cd pdf-rag-chatbot/backend
+git clone https://github.com/<your-username>/DocuChat.git
+cd DocuChat/backend
 uv sync
 ```
 
