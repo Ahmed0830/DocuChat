@@ -22,7 +22,6 @@ backend/                 # Python project root
   pyproject.toml
   uv.lock
   .env                   # ← create this (see below)
-  main.py                # CLI chatbot entry point
   app.py                 # FastAPI application
   session_manager.py     # Per-session in-memory RAG lifecycle
   rag/
@@ -33,7 +32,7 @@ backend/                 # Python project root
     prompt.py            # System prompt
   evaluate.py            # RAGAS evaluation: baseline vs re-ranked
   data/
-    pdfs/                # Drop your PDFs here (CLI mode / evaluation)
+    pdfs/                # Drop your PDFs here (evaluation)
 frontend/                # React + Vite + Tailwind frontend
 README.md
 ```
@@ -118,35 +117,3 @@ The script:
 4. Prints a side-by-side comparison table and saves `results_baseline.json` / `results_reranked.json` (git-ignored).
 
 > Make sure `data/pdfs/` contains at least one PDF before running.
-
----
-
-## CLI Mode (original)
-
-You can still use the original CLI against a pre-built on-disk Qdrant store.
-
-**Ingest PDFs once:**
-
-```python
-from rag.data_loader import load_documents
-from rag.vectorstore import QdrantStore
-
-store = QdrantStore(collection_name="rag_documents", location="./qdrant_store")
-docs = load_documents("data/pdfs")
-store.build_from_documents(docs)
-```
-
-To add more PDFs later, just drop them in and call `build_from_documents()` again — existing embeddings are not re-processed, new ones are appended.
-
-**Start the chatbot**
-
-```bash
-cd backend
-uv run python main.py
-```
-
-```
-RAG Chatbot  (type 'exit' or 'quit' to stop)
-
-You: what is the main topic of the document?
-```
