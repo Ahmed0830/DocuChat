@@ -1,5 +1,6 @@
 import os
 
+from langchain_core.language_models import BaseChatModel
 from langchain_openai import AzureChatOpenAI
 
 _REQUIRED_ENV_VARS = (
@@ -10,7 +11,7 @@ _REQUIRED_ENV_VARS = (
 )
 
 
-def get_llm() -> AzureChatOpenAI:
+def get_llm() -> BaseChatModel:
     """Initialise AzureChatOpenAI from environment variables."""
     missing = [k for k in _REQUIRED_ENV_VARS if not os.getenv(k)]
     if missing:
