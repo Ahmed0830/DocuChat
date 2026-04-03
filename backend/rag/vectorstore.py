@@ -13,6 +13,7 @@ import os
 import uuid
 
 from langchain_core.documents import Document
+from langchain_core.embeddings import Embeddings
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_qdrant import QdrantVectorStore
 from langchain_text_splitters import RecursiveCharacterTextSplitter
@@ -49,10 +50,11 @@ class QdrantStore:
         self,
         collection_name: str = "rag_documents",
         embedding_model: str = "all-MiniLM-L6-v2",
-        chunk_size: int = 1000,
-        chunk_overlap: int = 200,
+        chunk_size: int = 1500,
+        chunk_overlap: int = 300,
         location: str = "./qdrant_store",
         api_key: str | None = None,
+        embeddings: Embeddings | None = None,
     ):
         self.collection_name = collection_name
         self.embedding_model_name = embedding_model
@@ -61,7 +63,9 @@ class QdrantStore:
         self.location = location
         self.api_key = api_key or os.environ.get("QDRANT_API_KEY")
 
-        self.embeddings = HuggingFaceEmbeddings(model_name=embedding_model)
+        self.embeddings = embeddings or HuggingFaceEmbeddings(
+            model_name=embedding_model
+        )
         self.client = self._build_client()
         self.vectorstore: QdrantVectorStore | None = None
 
@@ -136,6 +140,7 @@ class QdrantStore:
         ]
         self.vectorstore.add_documents(chunks, ids=ids)
         logger.info("Done. %d chunk(s) stored in Qdrant.", len(chunks))
+        return len(chunks)
 
     def load(self) -> None:
         """
@@ -168,7 +173,7 @@ class QdrantStore:
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
-    from src.data_loader import load_documents  # local import for script-mode only
+    from .data_loader import load_documents  # local import for script-mode only
 
     # Quick test to verify the store can be built and queried
     documents = load_documents("data/pdfs")

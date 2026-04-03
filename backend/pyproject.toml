@@ -2,7 +2,7 @@
 name = "rag-langchain"
 version = "0.1.0"
 description = "Add your description here"
-readme = "README.md"
+readme = "../README.md"
 requires-python = ">=3.13"
 dependencies = [
     "langchain>=1.2.14",
@@ -12,6 +12,13 @@ dependencies = [
     "qdrant-client>=1.9.0",
     "pymupdf>=1.27.2.2",
     "langchain-huggingface>=1.2.1",
+    "sentence-transformers>=3.0.0",
     "langchain-openai>=1.1.12",
     "python-dotenv>=1.0.0",
+    "fastapi[standard]>=0.115.0",
+    "uvicorn[standard]>=0.30.0",
+    "python-multipart>=0.0.9",
+    "docx2txt>=0.8",
+    "ragas>=0.2,<0.3",
+    "rapidfuzz>=3.14.3",
 ]

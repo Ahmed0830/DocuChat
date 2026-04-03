@@ -11,3 +11,5 @@ wheels/
 data/
 qdrant_store/
 .codemie/
+results_baseline.json
+results_reranked.json
